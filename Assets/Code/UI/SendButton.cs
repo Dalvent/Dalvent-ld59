@@ -40,6 +40,7 @@ namespace Code
             Text.text = sendAction.Name;
             _currentAction = sendAction.Use;
             Button.onClick.AddListener(_currentAction);
+            Button.interactable = !sendAction.IsDisabled;
         }
     }
 }

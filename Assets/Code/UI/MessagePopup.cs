@@ -19,6 +19,13 @@ namespace Code
             gameObject.SetActive(true);
             
             MessageText.text = message.GetMessage();
+        }        
+        
+        public void Open(string message)
+        {
+            gameObject.SetActive(true);
+
+            MessageText.text = message;
         }
 
         public void OnOkClicked()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Code.Core;
 using UnityEngine;
@@ -26,6 +27,14 @@ namespace Code
             Reveal(Math.Min(_userTakenPassword.Length - 1, 2));
         }
 
+        public char RevealFirst()
+        {
+            var index = Array.IndexOf(_userTakenPassword, NoneSymbol);
+            _userTakenPassword[index] = _password[index];
+            return _password[index];
+        }
+
+        
         public char Reveal(int index)
         {
             ValidateIndex(index);
@@ -65,6 +74,11 @@ namespace Code
         {
             if (index < 0 || index >= PasswordLength)
                 throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+        public int ShouldRevealCount()
+        {
+            return _userTakenPassword.Count(p => p == NoneSymbol);
         }
     }
 }

@@ -8,9 +8,26 @@ namespace Code.GameMap
     public class DronRoomMover : MonoBehaviour
     {
         public event Action CanMoveUpdated;
+        public event Action StopMove;
+        public event Action<DronRoomMover> Moved;
 
-        public Room CurrentRoom { get; private set; }
-        
+        private Room _currentRoom;
+        public Room CurrentRoom
+        {
+            get => _currentRoom;
+            private set
+            {
+                if (_currentRoom == value)
+                    return;
+                
+                _currentRoom = value;
+                
+                if (_currentRoom is BattleFogRoom battleFogRoom)
+                    battleFogRoom.Connected.OnStep(this);
+                Moved?.Invoke(this);
+            }
+        }
+
         private bool _canMove;
         public bool CanMove
         {
@@ -40,6 +57,7 @@ namespace Code.GameMap
             StopMoving();
             Vector3 target = room.transform.position;
             CanMove = false;
+            CurrentRoom = room;
 
             _moveTween = Tween.Position(
                     transform,
@@ -49,8 +67,11 @@ namespace Code.GameMap
                 )
                 .OnComplete(() =>
                 {
-                    CurrentRoom = room;
                     CanMove = room != null;
+                    StopMove?.Invoke();
+                    
+                    if (CurrentRoom is PasswordRoom)
+                        Game.Instance.WinTransitor.ShowEnd();
                 });
         }
 
@@ -60,6 +81,11 @@ namespace Code.GameMap
             {
                 _moveTween.Stop();
             }
+        }
+
+        public void OnDronMoved()
+        {
+            throw new NotImplementedException();
         }
     }
 }

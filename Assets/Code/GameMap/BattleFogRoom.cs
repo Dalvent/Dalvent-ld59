@@ -6,7 +6,7 @@ namespace Code.GameMap
 {
     public class BattleFogRoom : Room
     {
-        public FogRoom Connected;
+        public FogRoom Connected { get; private set; }
         public GameObject Unknown;
         
         public bool IsConnected => Connected.gameObject.activeSelf;
@@ -17,31 +17,36 @@ namespace Code.GameMap
         {
             Connected.gameObject.SetActive(true);
             Unknown.SetActive(false);
+            Connected.OnConnected(this);
 
             if (GameMapSelectable.IsSelected)
-                OnSelected();
+                FillList();
         }
         
         private void Awake()
         {
+            Connected = GetComponentInChildren<FogRoom>();
             Connected.gameObject.SetActive(false);
             Unknown.SetActive(true);
         }
 
         private void OnEnable()
         {
-            GameMapSelectable.Selected += OnSelected;
+            GameMapSelectable.Selected += FillList;
             GameMapSelectable.Unselected += OnUnselected;
         }
         
         private void OnDisable()
         {
-            GameMapSelectable.Selected -= OnSelected;
+            GameMapSelectable.Selected -= FillList;
             GameMapSelectable.Unselected -= OnUnselected;
         }
 
-        private void OnSelected()
+        public void FillList()
         {
+            if (!GameMapSelectable.IsSelected)
+                return;
+            
             var actions = new List<SendAction>
             {
                 new("Status", OnWritingPassword),

@@ -4,7 +4,7 @@ namespace Code.GameMap.Storage
 {
     public class MoneyStorage
     {
-        public int CurrentMoney { get; private set; } = 500;
+        public int CurrentMoney { get; private set; } = 5;
         
         public event Action<int> MoneyAdded;
         

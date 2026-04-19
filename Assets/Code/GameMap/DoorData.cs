@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.GameMap
 {
@@ -14,11 +16,18 @@ namespace Code.GameMap
     
     public class DoorData : MonoBehaviour
     {
-        public bool CanUse;
-        public bool CanClose;
-        public bool IsClosed;
+        private DoorClosable _doorClosable;
+        
+        public bool CanNotUse;
         public Room From;
         public Room To;
+
+        public bool IsClosedDoor => _doorClosable != null && _doorClosable.IsClosed;
+
+        public void Awake()
+        {
+            _doorClosable = GetComponentInChildren<DoorClosable>();
+        }
 
         public Room SecondRoom(Room first)
         {

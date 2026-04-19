@@ -13,10 +13,23 @@ public class Game : MonoBehaviour
     public PasswordPopup PasswordPopup;
     public MessagePopup MessagePopup;
     public GameField GameField;
-    public PlayerSelector PlayerSelector { get; }= new();
-    public MoneyStorage MoneyStorage { get; }= new();
-    public DronStats DronStats { get; } = new();
-    public PasswordStorage PasswordStorage { get; } = new(new PasswordGenerator());
+    public DoorOpen DoorOpen;
+    public WinTransitor WinTransitor;
+    public PlayerSelector PlayerSelector { get; }
+    public MoneyStorage MoneyStorage { get; }
+    public DronStats DronStats { get; }
+    public PasswordStorage PasswordStorage { get; }
+    public DronsManager DronsManager { get; }
+
+    public Game()
+    {
+        PlayerSelector = new PlayerSelector();
+        MoneyStorage = new MoneyStorage();
+        DronStats = new DronStats();
+        PasswordStorage = new PasswordStorage(new PasswordGenerator());
+
+        DronsManager = new DronsManager(DronStats, MoneyStorage);
+    }
     
     public void Awake()
     {

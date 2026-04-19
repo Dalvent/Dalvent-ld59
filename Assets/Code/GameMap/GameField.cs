@@ -8,14 +8,9 @@ public class GameField : MonoBehaviour
 {
     private Room[] _rooms;
     private Dictionary<Room, List<DoorData>> _doorsByRoom;
-    private List<DronRoomMover> _drons = new();
 
     public IReadOnlyList<DoorData> GetDoors(Room room) => _doorsByRoom[room];
 
-    public void AddDron(DronRoomMover dron) => _drons.Add(dron);
-
-    public void RemoveDrone(DronRoomMover dron) => _drons.Remove(dron);
-    
     private void Awake()
     {
         _rooms = GetComponentsInChildren<Room>();
@@ -56,13 +51,26 @@ public class GameField : MonoBehaviour
 
         return false;
     }
-
-    public bool IsRoomWithoutDron(Room room) => _drons.Any(d => d.CurrentRoom == room);
     
     private static bool IsStartRoom(Room room) => room is YouRoom or PasswordRoom or DroneFactoryRoom;
 
     public bool IsVisible(DoorData doorData)
     {
         return doorData.From.gameObject.activeSelf && doorData.To.gameObject.activeSelf;
+    }
+
+    public void ConnectRoom(Room currentRoom)
+    {
+        if (currentRoom is not BattleFogRoom battleFogRoom)
+            return;
+        
+        battleFogRoom.MakeConnected();
+        var doors = _doorsByRoom[battleFogRoom];
+
+        foreach (var door in doors)
+        {
+            door.gameObject.SetActive(true);
+            door.SecondRoom(battleFogRoom).gameObject.SetActive(true);
+        }
     }
 }

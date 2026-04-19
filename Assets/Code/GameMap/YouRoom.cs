@@ -21,7 +21,7 @@
             var actions = new []
             {
                 new SendAction("Status", OnShowStatus),
-                new SendAction("Open vent", OnOpenVent)
+                new SendAction("Use door", OnOpenDoor)
             };
             Game.Instance.SendButtonsPanel.SetActions(actions);
         }
@@ -36,9 +36,9 @@
             Game.Instance.MessagePopup.Open(MessageType.ItsYou);
         }
 
-        private void OnOpenVent()
+        private void OnOpenDoor()
         {
-            throw new System.NotImplementedException();
+            Game.Instance.DoorOpen.Interact();
         }
     }
 }
