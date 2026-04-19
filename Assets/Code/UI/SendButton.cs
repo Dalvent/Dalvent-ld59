@@ -38,7 +38,12 @@ namespace Code
             DisableOverlay.gameObject.SetActive(sendAction.IsDisabled);
             
             Text.text = sendAction.Name;
-            _currentAction = sendAction.Use;
+            _currentAction = () =>
+            {
+                sendAction.Use();
+                Game.Instance.SelectButtonAudio.PlayWithRandomPitch();
+            };
+            
             Button.onClick.AddListener(_currentAction);
             Button.interactable = !sendAction.IsDisabled;
         }

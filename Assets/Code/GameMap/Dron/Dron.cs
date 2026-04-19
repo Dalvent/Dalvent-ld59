@@ -152,6 +152,7 @@ namespace Code.GameMap
             Game.Instance.GameField.ConnectRoom(_dronRoomMover.CurrentRoom);
             IsConnecting = false;
             
+            OnStopMove();
             if (GameMapSelectable.IsSelected)
                 OnSelected();
         }

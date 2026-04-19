@@ -8,18 +8,29 @@ namespace Code.GameMap
 
         private void OnEnable()
         {
-            GameMapSelectable.Selected += OnSelected;
+            GameMapSelectable.Selected += FillList;
             GameMapSelectable.Unselected += OnUnselected;
         }
         
         private void OnDisable()
         {
-            GameMapSelectable.Selected -= OnSelected;
+            GameMapSelectable.Selected -= FillList;
             GameMapSelectable.Unselected -= OnUnselected;
         }
 
-        private void OnSelected()
+        public void FillList()
         {
+            Game.Instance.SendButtonsPanel.ClearAll();
+            
+            if (Game.Instance.PasswordPopup.IsSended)
+            {
+                Game.Instance.SendButtonsPanel.SetActions(new []
+                {
+                    new SendAction("Status", OnShowStatus2)
+                });
+                return;
+            }
+            
             Game.Instance.SendButtonsPanel.SetActions(new []
             {
                 new SendAction("Status", OnShowStatus),
@@ -32,6 +43,11 @@ namespace Code.GameMap
             Game.Instance.MessagePopup.Open(MessageType.ItsYourTarget);
         }
 
+        private void OnShowStatus2()
+        {
+            Game.Instance.MessagePopup.Open("Status - Ready to win!");
+        }
+        
         private void OnUnselected()
         {
             Game.Instance.SendButtonsPanel.ClearAll();
@@ -39,7 +55,7 @@ namespace Code.GameMap
 
         private void OnWritingPassword()
         {
-            Game.Instance.PasswordPopup.Open();
+            Game.Instance.PasswordPopup.Open(this);
         }
     }
 }

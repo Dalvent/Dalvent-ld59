@@ -9,6 +9,7 @@ namespace Code
         
         public void ShowEnd()
         {
+            Game.Instance.MessageAudio.PlayWithRandomPitch();
             YouWin.gameObject.SetActive(true);
 
             foreach (var disableObject in DisableObjects)

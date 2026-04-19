@@ -23,6 +23,7 @@ namespace Code.GameMap
         public Room To;
 
         public bool IsClosedDoor => _doorClosable != null && _doorClosable.IsClosed;
+        public void Unlock() => _doorClosable.IsClosed = false;
 
         public void Awake()
         {

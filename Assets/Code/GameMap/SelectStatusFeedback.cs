@@ -25,6 +25,7 @@ namespace Code.GameMap
         private void OnSelected()
         {
             SelectedImage.gameObject.SetActive(true);
+            Game.Instance.SelectNodeAudio.PlayWithRandomPitch();
         }
 
         private void OnUnselected()

@@ -21,6 +21,13 @@ public class Game : MonoBehaviour
     public PasswordStorage PasswordStorage { get; }
     public DronsManager DronsManager { get; }
 
+    public AudioSource SelectNodeAudio;
+    public AudioSource SelectButtonAudio;
+    public AudioSource MessageAudio;
+    public AudioSource MoneyAudio;
+    public AudioSource MoneyRemAudio;
+
+
     public Game()
     {
         PlayerSelector = new PlayerSelector();

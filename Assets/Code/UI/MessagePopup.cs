@@ -19,6 +19,7 @@ namespace Code
             gameObject.SetActive(true);
             
             MessageText.text = message.GetMessage();
+            Game.Instance.MessageAudio.PlayWithRandomPitch();
         }        
         
         public void Open(string message)
@@ -26,6 +27,7 @@ namespace Code
             gameObject.SetActive(true);
 
             MessageText.text = message;
+            Game.Instance.MessageAudio.PlayWithRandomPitch();
         }
 
         public void OnOkClicked()

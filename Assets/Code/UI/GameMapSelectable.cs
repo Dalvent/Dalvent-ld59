@@ -30,6 +30,7 @@ namespace Code
         public void OnPointerClick(PointerEventData eventData)
         {
             Game.Instance.PlayerSelector.Select(this);
+            Game.Instance.SelectNodeAudio.PlayWithRandomPitch();
         }
     }
 }

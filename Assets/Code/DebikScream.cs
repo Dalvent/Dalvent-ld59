@@ -49,7 +49,7 @@ namespace Code
             yield return new WaitForSeconds(1f);
             while (true)
             {
-                AudioSource.PlayWithRandomPitch(0.5f, 1.5f);
+                AudioSource.PlayWithRandomPitch();
                 
                 yield return new WaitForSeconds(1f);
             }

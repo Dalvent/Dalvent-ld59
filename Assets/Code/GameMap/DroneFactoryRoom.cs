@@ -8,7 +8,7 @@ using UnityEngine;
 public class DroneFactoryRoom : Room
 {
     private const int SpawnDronStartCost = 5;
-    private const float SpawnDronMultCost = 1.4f;
+    private const float SpawnDronMultCost = 1.3f;
 
     private int CurrentNextDronCost = SpawnDronStartCost;
     private int DronBought = 0;
@@ -65,20 +65,19 @@ public class DroneFactoryRoom : Room
                                 Game.Instance.DronsManager.Drons.Count < Game.Instance.DronStats.MaxCount
                                 && Game.Instance.MoneyStorage.CurrentMoney >= dronCost;
         
-        actions.Add(new($"{dronCost}$: build new Drone", OnBuildNewDrone, !canBoughtNewDron));
+        actions.Add(new($"{dronCost}$: Build new Drone", () => OnBuildNewDrone(dronCost), !canBoughtNewDron));
         actions.AddRange(Game.Instance.DronsManager.CreateUpgradeActions());
         Game.Instance.SendButtonsPanel.SetActions(actions);
     }
 
 
-    private void OnBuildNewDrone()
+    private void OnBuildNewDrone(int cost)
     {
         var newDrone = Instantiate(Dron, Game.Instance.GameField.transform);
         Game.Instance.DronsManager.AddDron(newDrone);
 
-        var cost = CurrentNextDronCost;
         DronBought++;
-        CurrentNextDronCost = (int)(DronBought * SpawnDronMultCost * CurrentNextDronCost);
+        CurrentNextDronCost = (int)(DronBought * SpawnDronMultCost + CurrentNextDronCost);
         
         newDrone.TeleportTo(this);
         newDrone.MoveTo(_nextRoom);

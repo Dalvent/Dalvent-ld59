@@ -7,7 +7,7 @@ namespace Code.GameMap.FogRooms
         public override void OnStep(DronRoomMover dronRoomMover)
         {
             var dron = dronRoomMover.GetComponent<Dron>();
-            dron.En = 1;
+            dron.En = 2;
         }
 
         public override MessageType GetStatus()

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Code.GameMap;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace Code
         public Button CancelButton;
 
         public char[] _written;
+        private PasswordRoom _passwordRoom;
 
         private void Awake()
         {
@@ -32,10 +34,13 @@ namespace Code
         //     }
         // }
         
-        public void Open()
+        public void Open(PasswordRoom passwordRoom)
         {
+            _passwordRoom = passwordRoom;
             gameObject.SetActive(true);
             RefreshView();
+            
+            Game.Instance.MessageAudio.PlayWithRandomPitch();
         }
 
         public void Close()
@@ -62,6 +67,12 @@ namespace Code
 
         private void OnSendClicked()
         {
+            foreach (var door in Game.Instance.GameField.GetDoors(_passwordRoom))
+                door.Unlock();
+            _passwordRoom.FillList();
+            IsSended = true;
         }
+
+        public bool IsSended { get; set; }
     }
 }

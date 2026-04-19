@@ -39,7 +39,8 @@ namespace Code.GameMap.FogRooms
                     Game.Instance.MessagePopup.Open($"You found letter {letter}");
                     Revel.SetActive(true);
                     _isReviled = true;
-                }, Game.Instance.MoneyStorage.CurrentMoney >= Money)
+                    _battleFogRoom.FillList();
+                }, Game.Instance.MoneyStorage.CurrentMoney < Money)
             };
         }
     }

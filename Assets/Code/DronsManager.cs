@@ -26,22 +26,22 @@ namespace Code
             {
                 new DronUpgrade(
                     "Max Drones",
-                    new[] { 5000, 15000 },
+                    new[] { 100, 200, 500, 1000 },
                     (stats, level, maxLevel) => stats.MaxCount = level),
 
                 new DronUpgrade(
                     "Scan Time",
-                    new[] { 15, 500, 1000 },
+                    new[] { 15, 50, 100, 200, 300 },
                     (stats, level, maxLevel) => { stats.ScanTime = DronStats.GetScanTime(level, maxLevel); }),
 
                 new DronUpgrade(
                     "Max Energy",
-                    new[] { 50, 1000, 1500, 2500 },
+                    new[] { 50, 150, 350, 500 },
                     (stats, level, maxLevel) => { stats.MaxEnergy = DronStats.GetMaxEnergy(level, maxLevel); }),
 
                 new DronUpgrade(
                     "Move Time",
-                    new[] { 15, 200, 3000 },
+                    new[] { 15, 100, 200, 300, 500 },
                     (stats, level, maxLevel) => { stats.MoveTime = DronStats.GetMoveTime(level, maxLevel); })
             };
 
